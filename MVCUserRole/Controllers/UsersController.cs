@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Security.Claims;
+using System.Web.Security;
 using MVCUserRole.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -13,7 +14,7 @@ namespace MVCUserRole.Controllers
     [Authorize]
     public class UsersController : Controller
     {
-        // GET: Users
+        // GET: Users 
         public Boolean isAdminUser()
         {
             if (User.Identity.IsAuthenticated)
@@ -33,14 +34,16 @@ namespace MVCUserRole.Controllers
             }
             return false;
         }
-
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
             {
                 var user = User.Identity;
                 ViewBag.Name = user.Name;
+                //    ApplicationDbContext context = new ApplicationDbContext(); 
+                //    var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)); 
 
+                //var s=    UserManager.GetRoles(user.GetUserId()); 
                 ViewBag.displayMenu = "No";
 
                 if (isAdminUser())
@@ -53,7 +56,12 @@ namespace MVCUserRole.Controllers
             {
                 ViewBag.Name = "Not Logged IN";
             }
+
+
             return View();
+
+
         }
     }
 }
+    
